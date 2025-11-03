@@ -107,6 +107,9 @@ A keystore is a protected file that holds the signing key. You must enter a pass
 
 - **What is the two-letter country code for this unit:** country code (e.g., `us`, `in`)
 
+> They are just informational fields inside the signing certificate (CN, OU, O, L, ST, C).
+> Java’s keytool does not verify the truth of the values you type — you can use real data or fake text.
+
 **Confirmation (Is CN=..., OU=..., etc. correct?):**
 
 Keytool shows what you entered and asks you to confirm. Answer `yes` if it looks correct.
