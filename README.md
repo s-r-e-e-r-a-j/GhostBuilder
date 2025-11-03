@@ -127,3 +127,6 @@ Used again when signing the APK to confirm your keystore password.
 `Yes` (dry run): the tool only shows what it would do (preview). No files are created or changed.
 
 `No`: the tool performs the real actions and writes files.
+
+## License
+This project is licensed under the GNU General Public License v3.0
