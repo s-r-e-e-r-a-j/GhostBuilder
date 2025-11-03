@@ -22,6 +22,9 @@ GhostBuilder is provided **strictly** for lawful, authorized security work — i
 
 By downloading or using GhostBuilder you acknowledge and agree that you are solely responsible for complying with all applicable laws and for securing any required permissions before testing. The author **expressly disclaim all liability** for any misuse, loss, damage, or legal claims arising from use or misuse of this software. If you do not accept these terms, do not download, run, or distribute this software.
 
+## Compatibility
+- Linux (Debian, RHEL, Arch)
+
 ## Requirements
 
 GhostBuilder needs the following tools:
