@@ -17,6 +17,11 @@ It’s designed for **ethical hacking**, **penetration testing**, and **security
 
 - Simple menu-based interface
 
+## Disclaimer
+GhostBuilder is provided **strictly** for lawful, authorized security work — including learning, research, penetration testing, and red-teaming — performed only on systems you own or for which you have **explicit written permission**. Any use of this project to access, modify, damage, or interfere with systems, networks, data, or services without explicit authorization is **strictly prohibited** and may be a criminal offense.
+
+By downloading or using GhostBuilder you acknowledge and agree that you are solely responsible for complying with all applicable laws and for securing any required permissions before testing. The author **expressly disclaim all liability** for any misuse, loss, damage, or legal claims arising from use or misuse of this software. If you do not accept these terms, do not download, run, or distribute this software.
+
 ## Requirements
 
 GhostBuilder needs the following tools:
