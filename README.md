@@ -17,4 +17,3 @@ It’s designed for **ethical hacking**, **penetration testing**, and **security
 
 - Simple menu-based interface
 
-- Works on Linux-based systems
