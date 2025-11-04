@@ -88,9 +88,9 @@ GhostBuilder will guide you step by step — just enter:
 
 - Dry run? (y/N):
 
-    - `Yes` (dry run): the tool only shows what it would do (preview). No files are created or changed.
+    - `y` (dry run): the tool only shows what it would do (preview). No files are created or changed.
 
-    - `No`: the tool performs the real actions and writes files.
+    - `n`: the tool performs the real actions and writes files.
 
 You can also sign the APK automatically after building.
 
@@ -98,7 +98,7 @@ You can also sign the APK automatically after building.
 
 **Sign & zipalign? (y/N):**
 
-If you choose `yes`, the tool will sign the APK (add a digital certificate) and run zipalign so the APK is ready for installation. If you choose `no`, the APK will not be signed and may not install on some devices.
+If you choose `y`, the tool will sign the APK (add a digital certificate) and run zipalign so the APK is ready for installation. If you choose `n`, the APK will not be signed and may not install on some devices.
 
 **Final name:**
 
