@@ -86,9 +86,15 @@ GhostBuilder will guide you step by step — just enter:
 
 - Output file name
 
+- Dry run? (y/N):
+
+    - `Yes` (dry run): the tool only shows what it would do (preview). No files are created or changed.
+
+    - `No`: the tool performs the real actions and writes files.
+
 You can also sign the APK automatically after building.
 
-## Signing, Zipalign and Dry-run 
+## Signing, Zipalign 
 
 **Sign & zipalign? (y/N):**
 
@@ -125,12 +131,6 @@ Keytool shows what you entered and asks you to confirm. Answer `yes` if it looks
 **Enter Passphrase for keystore:**
 
 Used again when signing the APK to confirm your keystore password.
-
-**Dry run? (y/N):**
-
-`Yes` (dry run): the tool only shows what it would do (preview). No files are created or changed.
-
-`No`: the tool performs the real actions and writes files.
 
 ## License
 This project is licensed under the GNU General Public License v3.0
