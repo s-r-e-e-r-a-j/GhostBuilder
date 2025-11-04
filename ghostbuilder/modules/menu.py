@@ -85,12 +85,12 @@ def android_normal() -> None:
     if not validate_port(lport):
         fail('Invalid port')
         return
-    out = ask('Output apk (example payload.apk): ').strip()
+    out = ask('Output apk (example: /path/to/payloadname.apk): ').strip()
     dry = ask('Dry run? (y/N): ').strip().lower() == 'y'
     ok = generate(key, lhost, int(lport), out, dry=dry)
     if ok and not dry:
         if ask('Sign & zipalign? (y/N): ').strip().lower() == 'y':
-            final = ask('Final name (final.apk): ').strip()
+            final = ask('Final name (/path/to/final.apk): ').strip()
             android_sign(out, final)
 
 
@@ -107,12 +107,12 @@ def android_inject() -> None:
         fail('Invalid port')
         return
     org = ask('Path to original APK: ').strip()
-    out = ask('Output apk (example infected.apk): ').strip()
+    out = ask('Output apk (example: /path/to/infected.apk): ').strip()
     dry = ask('Dry run? (y/N): ').strip().lower() == 'y'
     ok = generate(key, lhost, int(lport), out, infile=org, dry=dry)
     if ok and not dry:
         if ask('Sign & zipalign? (y/N): ').strip().lower() == 'y':
-            final = ask('Final name (final.apk): ').strip()
+            final = ask('Final name (/path/to/final.apk): ').strip()
             android_sign(out, final)
 
 
@@ -127,6 +127,6 @@ def simple_flow(kind: str) -> None:
     if not validate_port(lport):
         fail('Invalid port')
         return
-    out = ask('Output filename(Extensions:- linux:.elf, windows:.exe, macOS/iOS:.macho): ').strip()
+    out = ask('Output filename [example:/path/to/payloadname.extension] (Extensions:- linux:.elf, windows:.exe, macOS/iOS:.macho): ').strip()
     dry = ask('Dry run? (y/N): ').strip().lower() == 'y'
     generate(kind, lhost, int(lport), out, dry=dry)
