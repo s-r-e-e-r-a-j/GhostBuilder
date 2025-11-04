@@ -26,6 +26,7 @@ By downloading or using GhostBuilder you acknowledge and agree that you are sole
 - Linux (Debian, RHEL, Arch)
 
 ## Requirements
+Ensure that Python version `3.10` or higher is installed on your system.
 
 GhostBuilder needs the following tools:
 
