@@ -41,7 +41,7 @@ def install_apktool_wget() -> int:
         ["wget", "https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool", "-O", "apktool"],
         ["chmod", "+x", "apktool"],
         ["sudo", "mv", "apktool", "/usr/local/bin/"],
-        ["wget", "https://github.com/iBotPeaches/Apktool/releases/download/v2.9.3/apktool_2.9.3.jar", "-O", "apktool.jar"],
+        ["wget", "https://github.com/iBotPeaches/Apktool/releases/download/v2.12.1/apktool_2.12.1.jar", "-O", "apktool.jar"],
         ["chmod", "+x", "apktool.jar"],
         ["sudo", "mv", "apktool.jar", "/usr/local/bin/"]
     ]
