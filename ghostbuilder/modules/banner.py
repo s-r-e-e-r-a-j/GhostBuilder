@@ -11,9 +11,11 @@ BANNER = r"""
  | |__| | | | | (_) \__ \ |_| |_) | |_| | | | (_| |  __/ |
   \_____|_| |_|\___/|___/\__|____/ \__,_|_|_|\__,_|\___|_|
 
+                                        Developer: Sreeraj
 """
 
 def show() -> None:
     print(C.GREEN)
     print(BANNER)
+    print(f"{C.YELLOW} * GitHub: https://github.com/s-r-e-e-r-a-j {C.RESET}")
     print(C.RESET)
