@@ -123,7 +123,7 @@ def auto_install(missing: List[str], auto: bool = False) -> Tuple[bool, List[str
         pkgs = list(dict.fromkeys(pkgs))
         rc = install_with_manager(manager, pkgs)
         if rc != 0:
-            fail("package manager install failed")
+            fail("package manager install failed for: {pkgs}")
             return False, pkgs
     if need_wget_apktool:
         rc = install_apktool_wget()
