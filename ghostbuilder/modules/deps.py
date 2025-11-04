@@ -120,6 +120,7 @@ def auto_install(missing: List[str], auto: bool = False) -> Tuple[bool, List[str
         if choice != "y":
             return False, pkgs
     if pkgs:
+        pkgs = list(dict.fromkeys(pkgs))
         rc = install_with_manager(manager, pkgs)
         if rc != 0:
             fail("package manager install failed")
