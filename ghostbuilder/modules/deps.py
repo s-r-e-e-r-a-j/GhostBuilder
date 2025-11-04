@@ -99,8 +99,15 @@ def auto_install(missing: List[str], auto: bool = False) -> Tuple[bool, List[str
                 pkgs.append("android-tools")
             elif manager == "pacman":
                 pkgs.append("android-sdk-build-tools")
-        elif m == "msfvenom":
-            pkgs.append("metasploit-framework")
+        elif m in ("msfvenom","msfconsole"):
+            if manager == "apt":
+               pkgs.append("metasploit-framework")
+            elif manager == "dnf":
+                 pkgs.append("metasploit")
+            elif manager == "pacman":
+                 pkgs.append("metasploit")
+            else:
+                 pkgs.append("metasploit-framework")
         else:
             pkgs.append(m)
     if not auto:
