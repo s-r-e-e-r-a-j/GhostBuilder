@@ -23,7 +23,7 @@ def install_with_manager(manager: str, packages: List[str]) -> int:
     cmds: List[List[str]] = []
     if manager == "apt":
         cmds = [
-            ["sudo", "apt-get", "update", "-y"],
+            ["sudo", "apt-get", "update"],
             ["sudo", "apt-get", "install", "-y"] + packages
         ]
     elif manager == "dnf":
@@ -89,7 +89,12 @@ def auto_install(missing: List[str], auto: bool = False) -> Tuple[bool, List[str
         elif m == "zipalign":
             pkgs.append("zipalign")
         elif m in ("jarsigner", "keytool"):
-            pkgs.append("openjdk-11-jdk")
+            if manager == "apt":
+               pkgs.append("openjdk-11-jdk")
+            elif manager == "dnf":
+                pkgs.append("java-11-openjdk-devel")
+            elif manager == "pacman":
+                pkgs.append("jdk-openjdk")
         elif m == "aapt":
             pkgs.append("aapt")
         elif m == "apksigner":
