@@ -48,6 +48,8 @@ GhostBuilder needs the following tools:
 
 If any are missing, GhostBuilder can install them automatically.
 
+ If automatic installation of a specific dependency failed, install it manually.
+
 ## Installation
 1. **Clone the repository:**
 ```bash
