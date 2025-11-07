@@ -26,7 +26,12 @@ MAP = {
     'linux_x64_meterpreter_bind_tcp': 'linux/x64/meterpreter/bind_tcp',
     'linux_x86_shell_bind_tcp': 'linux/x86/shell/bind_tcp',
     'linux_x64_shell_reverse_tcp': 'linux/x64/shell/reverse_tcp',
-    'macos_tcp': 'osx/x64/meterpreter_reverse_tcp',
+    'macos_x86_shell_reverse_tcp': 'osx/x86/shell_reverse_tcp',
+    'macos_x86_shell_bind_tcp': 'osx/x86/shell_bind_tcp',
+    'macos_x64_meterpreter_bind_tcp': 'osx/x64/meterpreter/bind_tcp',
+    'macos_x64_meterpreter_reverse_tcp': 'osx/x64/meterpreter/reverse_tcp',
+    'macos_x64_meterpreter_reverse_http': 'osx/x64/meterpreter_reverse_http',
+    'macos_x64_meterpreter_reverse_https': 'osx/x64/meterpreter_reverse_https',
     'ios_tcp': 'apple_ios/aarch64/meterpreter_reverse_tcp'
 }
 
