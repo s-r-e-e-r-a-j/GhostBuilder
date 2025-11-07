@@ -43,7 +43,7 @@ def main_loop() -> None:
         elif sel == '2':
             android_inject()
         elif sel == '3':
-            simple_flow('windows_tcp')
+            pick_windows_payload()
         elif sel == '4':
             simple_flow('linux_tcp')
         elif sel == '5':
@@ -72,6 +72,25 @@ def pick_android_payload() -> str:
         return 'android_https'
     return 'android_tcp'
 
+def pick_windows_payload() -> None:
+    clear()
+    show()
+    print('[1] windows/meterpreter/reverse_tcp')
+    print('[2] windows/meterpreter/reverse_https')
+    print('[3] windows/meterpreter/bind_tcp') 
+    print('[4] windows/shell/reverse_tcp')
+    print('[5] windows/shell/bind_tcp')
+    p = ask('choose: ').strip()
+    if p = '1':
+       simple_flow('windows_reverse_tcp')
+    elif p = '2':
+        simple_flow('windows_reverse_https')
+    elif p = '3'
+        simple_flow('windows_bind_tcp')
+    elif p = '4'
+        simple_flow('windows_shell_reverse_tcp')
+    elif p = '5'
+        simple_flow('windows_shell_bind_tcp')
 
 def android_normal() -> None:
     clear()
