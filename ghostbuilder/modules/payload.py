@@ -56,7 +56,12 @@ FMT = {
     'linux_x64_meterpreter_bind_tcp': 'elf',
     'linux_x86_shell_bind_tcp': 'elf',
     'linux_x64_shell_reverse_tcp': 'elf',
-    'macos_tcp': 'macho',
+    'macos_x86_shell_reverse_tcp': 'macho',
+    'macos_x86_shell_bind_tcp': 'macho',
+    'macos_x64_meterpreter_bind_tcp': 'macho',
+    'macos_x64_meterpreter_reverse_tcp': 'macho',
+    'macos_x64_meterpreter_reverse_http': 'macho',
+    'macos_x64_meterpreter_reverse_https': 'macho',
     'ios_tcp': 'macho'
 }
 
