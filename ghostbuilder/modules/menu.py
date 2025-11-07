@@ -45,7 +45,7 @@ def main_loop() -> None:
         elif sel == '3':
             pick_windows_payload()
         elif sel == '4':
-            simple_flow('linux_tcp')
+            pick_linux_payload()
         elif sel == '5':
             simple_flow('macos_tcp')
         elif sel == '6':
@@ -93,6 +93,50 @@ def pick_windows_payload() -> None:
         simple_flow('windows_shell_bind_tcp')
     else:
          warn('Invalid choice.')
+
+def pick_linux_payload() -> None:
+    clear()
+    show()
+    print('[1] linux/x86/meterpreter_reverse_http')
+    print('[2]  linux/x86/meterpreter_reverse_https')
+    print('[3]  linux/x86/meterpreter/reverse_tcp')
+    print('[4]  linux/x64/meterpreter_reverse_http')
+    print('[5]  linux/x64/meterpreter_reverse_https')
+    print('[6]  linux/x64/meterpreter/reverse_tcp')
+    print('[7]  linux/x86/shell/reverse_tcp')
+    print('[8]  linux/x64/shell/bind_tcp')
+    print('[9]  linux/x86/meterpreter/bind_tcp')
+    print('[10] linux/x64/meterpreter/bind_tcp')
+    print('[11] linux/x86/shell/bind_tcp')
+    print('[12] linux/x64/shell/reverse_tcp')
+    p = ask('choose: ').strip()
+
+    if p == '1':
+        simple_flow('linux_x86_meterpreter_reverse_http')
+    elif p == '2':
+        simple_flow('linux_x86_meterpreter_reverse_https')
+    elif p == '3':
+        simple_flow('linux_x86_meterpreter_reverse_tcp')
+    elif p == '4':
+        simple_flow('linux_x64_meterpreter_reverse_http')
+    elif p == '5':
+        simple_flow('linux_x64_meterpreter_reverse_https')
+    elif p == '6':
+        simple_flow('linux_x64_meterpreter_reverse_tcp')
+    elif p == '7':
+        simple_flow('linux_x86_shell_reverse_tcp')
+    elif p == '8':
+        simple_flow('linux_x64_shell_bind_tcp')
+    elif p == '9':
+        simple_flow('linux_x86_meterpreter_bind_tcp')
+    elif p == '10':
+        simple_flow('linux_x64_meterpreter_bind_tcp')
+    elif p == '11':
+        simple_flow('linux_x86_shell_bind_tcp')
+    elif p == '12':
+        simple_flow('linux_x64_shell_reverse_tcp')
+    else:
+        warn('Invalid choice.')
 
 def android_normal() -> None:
     clear()
