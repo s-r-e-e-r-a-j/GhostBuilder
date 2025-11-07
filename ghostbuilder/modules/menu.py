@@ -92,7 +92,7 @@ def pick_windows_payload() -> None:
     elif p = '5'
         simple_flow('windows_shell_bind_tcp')
     else:
-         fail('Invalid choice.')
+         warn('Invalid choice.')
 
 def android_normal() -> None:
     clear()
