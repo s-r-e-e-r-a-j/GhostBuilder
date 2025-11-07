@@ -47,7 +47,7 @@ def main_loop() -> None:
         elif sel == '4':
             pick_linux_payload()
         elif sel == '5':
-            simple_flow('macos_tcp')
+            pick_macos_payload()
         elif sel == '6':
             simple_flow('ios_tcp')
         elif sel == '7':
