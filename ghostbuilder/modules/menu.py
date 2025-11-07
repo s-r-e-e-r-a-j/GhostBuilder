@@ -81,15 +81,15 @@ def pick_windows_payload() -> None:
     print('[4] windows/shell/reverse_tcp')
     print('[5] windows/shell/bind_tcp')
     p = ask('choose: ').strip()
-    if p = '1':
+    if p == '1':
        simple_flow('windows_reverse_tcp')
-    elif p = '2':
+    elif p == '2':
         simple_flow('windows_reverse_https')
-    elif p = '3'
+    elif p == '3':
         simple_flow('windows_bind_tcp')
-    elif p = '4'
+    elif p == '4':
         simple_flow('windows_shell_reverse_tcp')
-    elif p = '5'
+    elif p == '5':
         simple_flow('windows_shell_bind_tcp')
     else:
          warn('Invalid choice.')
@@ -97,7 +97,7 @@ def pick_windows_payload() -> None:
 def pick_linux_payload() -> None:
     clear()
     show()
-    print('[1] linux/x86/meterpreter_reverse_http')
+    print('[1]  linux/x86/meterpreter_reverse_http')
     print('[2]  linux/x86/meterpreter_reverse_https')
     print('[3]  linux/x86/meterpreter/reverse_tcp')
     print('[4]  linux/x64/meterpreter_reverse_http')
@@ -137,6 +137,32 @@ def pick_linux_payload() -> None:
         simple_flow('linux_x64_shell_reverse_tcp')
     else:
         warn('Invalid choice.')
+
+def pick_macos_payload() -> None:
+    clear()
+    show()
+    print('[1] osx/x86/shell_reverse_tcp')
+    print('[2] osx/x86/shell_bind_tcp')
+    print('[3] osx/x64/meterpreter/bind_tcp')
+    print('[4] osx/x64/meterpreter/reverse_tcp')
+    print('[5] osx/x64/meterpreter_reverse_http')
+    print('[6] osx/x64/meterpreter_reverse_https')
+    p = ask('choose: ').strip()
+    if p == '1':
+       simple_flow('macos_x86_shell_reverse_tcp')
+    elif p == '2':
+        simple_flow('macos_x86_shell_bind_tcp')
+    elif p == '3':
+        simple_flow('macos_x64_meterpreter_bind_tcp')
+    elif p == '4':
+        simple_flow('macos_x64_meterpreter_reverse_tcp')
+    elif p == '5':
+        simple_flow('macos_x64_meterpreter_reverse_http')
+    elif p == '6':
+        simple_flow('macos_x64_meterpreter_reverse_https')
+    else:
+        warn('Invalid choice.')
+
 
 def android_normal() -> None:
     clear()
