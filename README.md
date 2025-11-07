@@ -132,7 +132,7 @@ Keytool shows what you entered and asks you to confirm. Answer `yes` if it looks
 
 **Enter Passphrase for keystore:**
 
-Used again when signing the APK to confirm your keystore password.
+Used again when signing the APK to confirm your keystore password (the same password you entered in the Enter keystore password / Re-enter new password field).
 
 ## License
 This project is licensed under the GNU General Public License v3.0
