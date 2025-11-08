@@ -36,9 +36,9 @@ MAP = {
     'ios_aarch64_meterpreter_reverse_https': 'apple_ios/aarch64/meterpreter_reverse_https',
     'ios_aarch64_meterpreter_reverse_tcp': 'apple_ios/aarch64/meterpreter_reverse_tcp',
     'ios_aarch64_shell_reverse_tcp': 'apple_ios/aarch64/shell_reverse_tcp',
-    'apple_ios/armle/meterpreter_reverse_http',
-    'apple_ios/armle/meterpreter_reverse_https',
-    'apple_ios/armle/meterpreter_reverse_tcp'
+    'ios_armle_meterpreter_reverse_http': 'apple_ios/armle/meterpreter_reverse_http',
+    'ios_armle_meterpreter_reverse_https': 'apple_ios/armle/meterpreter_reverse_https',
+    'ios_armle_meterpreter_reverse_tcp': 'apple_ios/armle/meterpreter_reverse_tcp'
 }
 
 FMT = {
@@ -72,6 +72,9 @@ FMT = {
     'ios_aarch64_meterpreter_reverse_https': 'macho',
     'ios_aarch64_meterpreter_reverse_tcp': 'macho',
     'ios_aarch64_shell_reverse_tcp': 'macho',
+    'ios_armle_meterpreter_reverse_http': 'macho',
+    'ios_armle_meterpreter_reverse_https': 'macho',
+    'ios_armle_meterpreter_reverse_tcp': 'macho'
 }
 
 
