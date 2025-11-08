@@ -49,7 +49,7 @@ def main_loop() -> None:
         elif sel == '5':
             pick_macos_payload()
         elif sel == '6':
-            simple_flow('ios_tcp')
+            pick_ios_payload()
         elif sel == '7':
             basic = check_required()
             android = check_android_tools()
@@ -163,6 +163,33 @@ def pick_macos_payload() -> None:
     else:
         warn('Invalid choice.')
 
+def pick_ios_payload() -> None:
+    clear()
+    show()
+    print('[1] apple_ios/aarch64/meterpreter_reverse_http')
+    print('[2] apple_ios/aarch64/meterpreter_reverse_https')
+    print('[3] apple_ios/aarch64/meterpreter_reverse_tcp')
+    print('[4] apple_ios/aarch64/shell_reverse_tcp')
+    print('[5] apple_ios/armle/meterpreter_reverse_http')
+    print('[6] apple_ios/armle/meterpreter_reverse_https')
+    print('[7] apple_ios/armle/meterpreter_reverse_tcp')
+    p = ask('choose: ').strip()
+    if p == '1':
+       simple_flow('ios_aarch64_meterpreter_reverse_http')
+    elif p == '2':
+        simple_flow('ios_aarch64_meterpreter_reverse_https')
+    elif p == '3':
+        simple_flow('ios_aarch64_meterpreter_reverse_tcp')
+    elif p == '4':
+        simple_flow('ios_aarch64_shell_reverse_tcp')
+    elif p == '5':
+        simple_flow('ios_armle_meterpreter_reverse_http')
+    elif p == '6':
+        simple_flow('ios_armle_meterpreter_reverse_https')
+    elif p == '7':
+        simple_flow('ios_armle_meterpreter_reverse_tcp')
+    else:
+        warn('Invalid choice')
 
 def android_normal() -> None:
     clear()
