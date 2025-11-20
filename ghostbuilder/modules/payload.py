@@ -50,7 +50,11 @@ MAP = {
     'asp_meterpreter_reverse_tcp': 'asp/meterpreter/reverse_tcp',
     'python_shell_reverse_tcp': 'python/shell_reverse_tcp',
     'ruby_shell_reverse_tcp': 'ruby/shell_reverse_tcp',
-    'unix_shell_reverse_tcp': 'unix/shell_reverse_tcp'
+    'unix_shell_reverse_tcp': 'unix/shell_reverse_tcp',
+    'nodejs_shell_reverse_tcp': 'nodejs/shell_reverse_tcp',
+    'perl_reverse_tcp': 'cmd/unix/reverse_perl',
+    'bash_reverse_tcp': 'cmd/unix/reverse_bash',
+    'go_meterpreter_reverse_tcp': 'go/meterpreter/reverse_tcp'
 }
 
 FMT = {
@@ -98,7 +102,11 @@ FMT = {
     'asp_meterpreter_reverse_tcp': 'asp',
     'python_shell_reverse_tcp': 'raw',
     'ruby_shell_reverse_tcp': 'raw',
-    'unix_shell_reverse_tcp': 'elf'
+    'unix_shell_reverse_tcp': 'elf',
+    'nodejs_shell_reverse_tcp': 'raw',
+    'perl_reverse_tcp': 'raw',
+    'bash_reverse_tcp': 'raw',
+    'go_meterpreter_reverse_tcp': 'elf'
 }
 
 
