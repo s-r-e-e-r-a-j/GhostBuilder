@@ -213,16 +213,15 @@ def pick_other_payloads() -> None:
     print('[5]  windows/meterpreter/reverse_tcp (ASPX)')
     print('[6]  python/shell_reverse_tcp')
     print('[7]  ruby/shell_reverse_tcp')
-    print('[8]  unix/shell_reverse_tcp')
+    print('[8]  cmd/unix/reverse')
     print('[9]  nodejs/shell_reverse_tcp')
     print('[10] cmd/unix/reverse_perl')
     print('[11] cmd/unix/reverse_bash')
-    print('[12] go/meterpreter/reverse_tcp')
-    print('[13] java/jsp_shell_bind_tcp')
-    print('[14] windows/meterpreter/reverse_http (ASPX)')
-    print('[15] windows/meterpreter/reverse_https (ASPX)')
-    print('[16] windows/x64/meterpreter/reverse_tcp (ASPX)')
-    print('[17] windows/x64/meterpreter/reverse_https (ASPX)')
+    print('[12] java/jsp_shell_bind_tcp')
+    print('[13] windows/meterpreter/reverse_http (ASPX)')
+    print('[14] windows/meterpreter/reverse_https (ASPX)')
+    print('[15] windows/x64/meterpreter/reverse_tcp (ASPX)')
+    print('[16] windows/x64/meterpreter/reverse_https (ASPX)')
 
     p = ask("choose: ").strip()
 
@@ -238,12 +237,11 @@ def pick_other_payloads() -> None:
         '9': 'nodejs_shell_reverse_tcp',
         '10': 'perl_reverse_tcp',
         '11': 'bash_reverse_tcp',
-        '12': 'go_meterpreter_reverse_tcp',
-        '13': 'jsp_shell_bind_tcp',
-        '14': 'windows_aspx_reverse_http',
-        '15': 'windows_aspx_reverse_https',
-        '16': 'windows_x64_aspx_reverse_tcp',
-        '17': 'windows_x64_aspx_reverse_https'
+        '12': 'jsp_shell_bind_tcp',
+        '13': 'windows_aspx_reverse_http',
+        '14': 'windows_aspx_reverse_https',
+        '15': 'windows_x64_aspx_reverse_tcp',
+        '16': 'windows_x64_aspx_reverse_https'
         
     }
 
