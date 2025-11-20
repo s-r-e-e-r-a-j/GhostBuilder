@@ -42,7 +42,15 @@ MAP = {
     'ios_aarch64_shell_reverse_tcp': 'apple_ios/aarch64/shell_reverse_tcp',
     'ios_armle_meterpreter_reverse_http': 'apple_ios/armle/meterpreter_reverse_http',
     'ios_armle_meterpreter_reverse_https': 'apple_ios/armle/meterpreter_reverse_https',
-    'ios_armle_meterpreter_reverse_tcp': 'apple_ios/armle/meterpreter_reverse_tcp'
+    'ios_armle_meterpreter_reverse_tcp': 'apple_ios/armle/meterpreter_reverse_tcp',
+    'windows_powershell_reverse_tcp': 'windows/powershell_reverse_tcp',
+    'java_meterpreter_reverse_tcp': 'java/meterpreter/reverse_tcp',
+    'php_meterpreter_reverse_tcp': 'php/meterpreter_reverse_tcp',
+    'jsp_meterpreter_reverse_tcp': 'jsp/meterpreter/reverse_tcp',
+    'asp_meterpreter_reverse_tcp': 'asp/meterpreter/reverse_tcp',
+    'python_shell_reverse_tcp': 'python/shell_reverse_tcp',
+    'ruby_shell_reverse_tcp': 'ruby/shell_reverse_tcp',
+    'unix_shell_reverse_tcp': 'unix/shell_reverse_tcp'
 }
 
 FMT = {
@@ -82,7 +90,15 @@ FMT = {
     'ios_aarch64_shell_reverse_tcp': 'macho',
     'ios_armle_meterpreter_reverse_http': 'macho',
     'ios_armle_meterpreter_reverse_https': 'macho',
-    'ios_armle_meterpreter_reverse_tcp': 'macho'
+    'ios_armle_meterpreter_reverse_tcp': 'macho',
+    'windows_powershell_reverse_tcp': 'ps1',
+    'java_meterpreter_reverse_tcp': 'jar',
+    'php_meterpreter_reverse_tcp': 'php',
+    'jsp_meterpreter_reverse_tcp': 'jsp',
+    'asp_meterpreter_reverse_tcp': 'asp',
+    'python_shell_reverse_tcp': 'python',
+    'ruby_shell_reverse_tcp': 'ruby',
+    'unix_shell_reverse_tcp': 'elf'
 }
 
 
