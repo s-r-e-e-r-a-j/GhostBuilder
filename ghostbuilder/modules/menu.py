@@ -36,7 +36,7 @@ def main_loop() -> None:
         print('[5] macOS payload')
         print('[6] iOS payload')
         print('[7] Re-check dependencies')
-        print('[8] Other payloads (PowerShell, Unix, Python, PHP, Ruby, Java, ASPX, JSP, Go, Perl, NodeJS, Bash)')
+        print('[8] Other payloads (PowerShell, Unix, Python, PHP, Ruby, Java, ASPX, JSP, Perl, NodeJS, Bash)')
         print('[9] Exit')
         sel = ask('Select: ').strip()
         if sel == '1':
@@ -309,7 +309,7 @@ def simple_flow(kind: str) -> None:
             "\n"
             "Supported extensions:\n"
             "  Windows: .exe\n"
-            "  Linux/Unix: .elf (includes Go payloads)\n"
+            "  Linux: .elf\n"
             "  macOS/iOS: .macho\n"
             "  PowerShell: .ps1\n"
             "  Java: .jar\n"
@@ -323,6 +323,7 @@ def simple_flow(kind: str) -> None:
             "  Perl: .pl\n"
             "  Bash: .sh\n"
             "  NodeJS: .js\n"
+            "  Unix: no extension needed\n"
             "\n"
             "Enter output file: "
           ).strip()
