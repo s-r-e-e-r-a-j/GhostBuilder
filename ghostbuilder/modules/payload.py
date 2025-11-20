@@ -106,7 +106,7 @@ FMT = {
     'windows_aspx_reverse_tcp': 'aspx',
     'windows_aspx_reverse_http': 'aspx',
     'windows_aspx_reverse_https': 'aspx',
-    'windows_x64_aspx_reverse_tcp': 'axpx',
+    'windows_x64_aspx_reverse_tcp': 'aspx',
     'windows_x64_aspx_reverse_https': 'aspx',
     'python_shell_reverse_tcp': 'raw',
     'ruby_shell_reverse_tcp': 'raw',
