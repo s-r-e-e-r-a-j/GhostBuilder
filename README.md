@@ -1,6 +1,6 @@
 ## GhostBuilder
 
-GhostBuilder is a payload generator tool for creating Android, Windows, Linux, macOS, and iOS payloads using **Metasploit**.
+**GhostBuilder** is a powerful payload‑generation tool for creating Android, Windows, Linux, macOS, iOS, and other types of payloads using **Metasploit**.
 It can also inject payloads into existing APK files and sign them automatically.
 
 It’s designed for **ethical hacking**, **penetration testing**, and **security research** — not for illegal use.
@@ -8,6 +8,8 @@ It’s designed for **ethical hacking**, **penetration testing**, and **security
 ## Features
 
 - Create payloads for Android, Windows, Linux, macOS, and iOS
+  
+- Supports Unix, PHP, Ruby, ASPX, JSP, PowerShell, Perl, Node.js, Java, Python, and Bash payloads.
 
 - Inject payloads into real APKs
 
@@ -78,7 +80,8 @@ Then select an option from the menu:
 [5] macOS payload
 [6] iOS payload
 [7] Re-check dependencies
-[8] Exit
+[8] Other payloads (PowerShell, Unix, Python, PHP, Ruby, Java, ASPX, JSP, Perl, NodeJS, Bash)
+[9] Exit
 ```
 GhostBuilder will guide you step by step — just enter:
 
