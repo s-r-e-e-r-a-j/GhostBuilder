@@ -60,7 +60,8 @@ MAP = {
     'bash_reverse_tcp': 'cmd/unix/reverse_bash',
     'java_meterpreter_reverse_http': 'java/meterpreter/reverse_http',
     'java_meterpreter_reverse_https': 'java/meterpreter/reverse_https',
-    'java_meterpreter_bind_tcp': 'java/meterpreter/bind_tcp'
+    'java_meterpreter_bind_tcp': 'java/meterpreter/bind_tcp',
+    'php_meterpreter_reverse_https': 'php/meterpreter/reverse_https'
 }
 
 FMT = {
@@ -118,7 +119,8 @@ FMT = {
     'bash_reverse_tcp': 'raw',
     'java_meterpreter_reverse_http': 'jar',
     'java_meterpreter_reverse_https': 'jar',
-    'java_meterpreter_bind_tcp': 'jar'
+    'java_meterpreter_bind_tcp': 'jar',
+    'php_meterpreter_reverse_https': 'raw'
 }
 
 def build_cmd(key: str, lhost: str, lport: int, out: str, infile: Optional[str] = None) -> List[str]:
