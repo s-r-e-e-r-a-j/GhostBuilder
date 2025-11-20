@@ -218,6 +218,7 @@ def pick_other_payloads() -> None:
     print('[10] cmd/unix/reverse_perl')
     print('[11] cmd/unix/reverse_bash')
     print('[12] go/meterpreter/reverse_tcp')
+    print('[13] java/jsp_shell_bind_tcp')
 
     p = ask("choose: ").strip()
 
@@ -233,7 +234,8 @@ def pick_other_payloads() -> None:
         '9': 'nodejs_shell_reverse_tcp',
         '10': 'perl_reverse_tcp',
         '11': 'bash_reverse_tcp',
-        '12': 'go_meterpreter_reverse_tcp'
+        '12': 'go_meterpreter_reverse_tcp',
+        '13': 'jsp_shell_bind_tcp'
     }
 
     if p in mapping:
