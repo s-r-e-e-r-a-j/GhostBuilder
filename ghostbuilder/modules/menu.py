@@ -247,8 +247,7 @@ def pick_other_payloads() -> None:
         '16': 'windows_x64_aspx_reverse_https',
         '17': 'java_meterpreter_reverse_http',
         '18': 'java_meterpreter_reverse_https',
-        '19': 'java_meterpreter_bind_tcp'
-        
+        '19': 'java_meterpreter_bind_tcp'        
     }
 
     if p in mapping:
