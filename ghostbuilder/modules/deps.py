@@ -29,7 +29,7 @@ def install_with_manager(manager: str, packages: List[str]) -> int:
     elif manager == "dnf":
         cmds = [["sudo", "dnf", "install", "-y"] + packages]
     elif manager == "pacman":
-        cmds = [["sudo", "pacman", "-Sy", "--noconfirm"] + packages]
+        cmds = [["sudo", "pacman", "-Syu", "--noconfirm"] + packages]
     for c in cmds:
         rc = run_cmd(c)
         if rc != 0:
