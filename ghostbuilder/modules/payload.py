@@ -2,7 +2,7 @@
 # GitHub: https://github.com/s-r-e-e-r-a-j
 
 from typing import Optional, List
-from .utils import run_cmd, info, ok, fail, warn
+from .utils import run_cmd, info, ok, fail, warn, ask
 import os
 
 MAP = {
@@ -175,8 +175,10 @@ def build_cmd(key: str, lhost: str, lport: int, out: str, infile: Optional[str] 
                  cmd += ['-i', str(iterations)]
 
     if not badchars and not (is_script or is_web or is_android or is_ios or is_linux_arm):
-        badchars = "\\x00\\x0a\\x0d"
-        info('[*] Using default badchars: \\x00\\x0a\\x0d') 
+        use_default = ask('[?] Use default badchars (\\x00\\x0a\\x0d)? (y/N): ').strip().lower()
+        if use_default == 'y':
+            badchars = "\\x00\\x0a\\x0d"
+            info('[*] Using default badchars: \\x00\\x0a\\x0d') 
     if badchars:
         if is_android or is_ios:
             info('[!] Badchars not supported for Android/iOS. Skipping...')
