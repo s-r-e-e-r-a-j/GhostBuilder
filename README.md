@@ -11,6 +11,10 @@ It’s designed for **ethical hacking**, **penetration testing**, and **security
   
 - Supports Unix, PHP, Ruby, ASPX, JSP, PowerShell, Perl, Node.js, Java, Python, and Bash payloads.
 
+- Encoder selection (for supported payloads)
+
+- Automatic bad character handling
+
 - Inject payloads into real APKs
 
 - Auto-install and check missing dependencies
@@ -90,6 +94,10 @@ GhostBuilder will guide you step by step — just enter:
 - LPORT (port number)
 
 - Output file name
+
+- Encoder selection (for supported payloads)
+
+- Bad characters (optional)
 
 - Dry run? (y/N):
 
