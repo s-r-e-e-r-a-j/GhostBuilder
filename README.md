@@ -95,15 +95,16 @@ GhostBuilder will guide you step by step — just enter:
 
 - Output file name
 
-- Encoder selection (for supported payloads)
-
-- Bad characters (optional)
-
 - Dry run? (y/N):
 
     - `y` (dry run): the tool only shows what it would do (preview). No files are created or changed.
 
     - `n`: the tool performs the real actions and writes files.
+  
+- Encoder selection (for supported payloads)
+
+- Bad characters (optional)
+
 
 You can also sign the APK automatically after building.
 
