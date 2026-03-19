@@ -73,9 +73,9 @@ MAP = {
 }
 
 FMT = {
-    'android_tcp': 'apk',
-    'android_http': 'apk',
-    'android_https': 'apk',
+    'android_tcp': None,
+    'android_http': None,
+    'android_https': None,
     'windows_reverse_tcp': 'exe',
     'windows_reverse_https': 'exe',
     'windows_reverse_http': 'exe',
