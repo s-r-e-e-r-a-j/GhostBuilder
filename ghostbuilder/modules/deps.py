@@ -1,6 +1,8 @@
 # Developer: Sreeraj
 # GitHub: https://github.com/s-r-e-e-r-a-j
 
+import json
+import urllib.request
 import shutil, os
 from .utils import is_installed, info, warn, fail, run_cmd
 
@@ -33,14 +35,44 @@ def install_with_manager(manager: str, packages: list[str]) -> int:
         rc = run_cmd(c)
         if rc != 0:
             return rc
+    if manager == "pacman":
+        warn("A restart may be required after full system upgrade.")
+        try:
+            input("Press Enter to continue...")
+        except EOFError:
+               pass
     return 0
 
+def get_latest_apktool_url() -> str | None:
+    api = "https://api.github.com/repos/iBotPeaches/Apktool/releases/latest"
+    req = urllib.request.Request(
+            api,
+            headers={"User-Agent": "Python"}
+          )
+    try:
+        with urllib.request.urlopen(req) as r:
+              data = json.loads(r.read().decode())
+    except Exception as e:
+            fail(f"failed to fetch latest apktool version: {e}")
+            return None
+
+    version = data["tag_name"].lstrip("v")
+
+    return (
+        f"https://github.com/iBotPeaches/Apktool/"
+        f"releases/download/v{version}/apktool_{version}.jar"
+    )
+
 def install_apktool_wget() -> int:
+    url = get_latest_apktool_url()
+    if not url:
+        return 1
+
     steps = [
         ["wget", "https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool", "-O", "apktool"],
         ["chmod", "+x", "apktool"],
         ["sudo", "mv", "apktool", "/usr/local/bin/"],
-        ["wget", "https://github.com/iBotPeaches/Apktool/releases/download/v2.12.1/apktool_2.12.1.jar", "-O", "apktool.jar"],
+        ["wget", url, "-O", "apktool.jar"],
         ["chmod", "+x", "apktool.jar"],
         ["sudo", "mv", "apktool.jar", "/usr/local/bin/"]
     ]
@@ -122,7 +154,7 @@ def auto_install(missing: list[str], auto: bool = False) -> tuple[bool, list[str
         pkgs = list(dict.fromkeys(pkgs))
         rc = install_with_manager(manager, pkgs)
         if rc != 0:
-            fail("package manager install failed for: {pkgs}")
+            fail(f"package manager install failed for: {pkgs}")
             return False, pkgs
     if need_wget_apktool:
         rc = install_apktool_wget()
