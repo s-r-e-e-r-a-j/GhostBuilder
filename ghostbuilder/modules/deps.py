@@ -119,7 +119,7 @@ def check_android_tools() -> dict:
     for t in ANDROID_TOOLS:
         ok = is_installed(t)
         res[t] = ok
-           if t == "apktool" and  ok:
+        if t == "apktool" and  ok:
                condition = apktool_version_supported()
                if not condition:
                   res["apktool"] = False
