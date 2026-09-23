@@ -2,7 +2,8 @@
 # GitHub: https://github.com/s-r-e-e-r-a-j
 
 import json
-import urllib.request
+# import urllib.request
+import subprocess
 import shutil, os
 from .utils import is_installed, info, warn, fail, run_cmd
 
@@ -43,28 +44,28 @@ def install_with_manager(manager: str, packages: list[str]) -> int:
                pass
     return 0
 
-def get_latest_apktool_url() -> str | None:
-    api = "https://api.github.com/repos/iBotPeaches/Apktool/releases/latest"
-    req = urllib.request.Request(
-            api,
-            headers={"User-Agent": "Python"}
-          )
-    try:
-        with urllib.request.urlopen(req) as r:
-              data = json.loads(r.read().decode())
-    except Exception as e:
-            fail(f"failed to fetch latest apktool version: {e}")
-            return None
-
-    version = data["tag_name"].lstrip("v")
-
-    return (
-        f"https://github.com/iBotPeaches/Apktool/"
-        f"releases/download/v{version}/apktool_{version}.jar"
-    )
+# TEMP DISABLED: Apktool 3.x compatibility issue.
+# Re-enable after Rapid7 adds Apktool 3.x support to Metasploit Framework
+# def get_latest_apktool_url() -> str | None:
+#    api = "https://api.github.com/repos/iBotPeaches/Apktool/releases/latest"
+#    req = urllib.request.Request(
+#            api,
+#            headers={"User-Agent": "Python"}
+#          )
+#    try:
+#        with urllib.request.urlopen(req) as r:
+#              data = json.loads(r.read().decode())
+#    except Exception as e:
+#            fail(f"failed to fetch latest apktool version: {e}")
+#            return None
+#    version = data["tag_name"].lstrip("v")
+#    return (
+#        f"https://github.com/iBotPeaches/Apktool/"
+#        f"releases/download/v{version}/apktool_{version}.jar"
+#    )
 
 def install_apktool_wget() -> int:
-    url = get_latest_apktool_url()
+    url = "https://github.com/iBotPeaches/Apktool/releases/download/v2.12.1/apktool_2.12.1.jar"
     if not url:
         return 1
 
@@ -85,11 +86,28 @@ def install_apktool_wget() -> int:
         return 1
     return 0
 
+def apktool_version_supported() -> bool:
+    try:
+        output = subprocess.check_output(
+            ["apktool", "--version"],
+            stderr=subprocess.STDOUT,
+            text=True
+        ).strip()
+
+        version = output.lstrip("v").split("-")[0]
+        major, minor, patch = map(int, version.split(".")[:3])
+
+        return (major, minor, patch) < (3, 0, 0)
+
+    except (FileNotFoundError, ValueError, subprocess.CalledProcessError):
+        return False
+
 def check_required() -> dict:
     res = {}
     for t in REQUIRED:
         ok = is_installed(t)
         res[t] = ok
+
         if ok:
             info(f"{t} found")
         else:
@@ -101,6 +119,20 @@ def check_android_tools() -> dict:
     for t in ANDROID_TOOLS:
         ok = is_installed(t)
         res[t] = ok
+           if t == "apktool" and  ok:
+               condition = apktool_version_supported()
+               if not condition:
+                  res["apktool"] = False
+                  ok = False
+                  warn("Apktool version >= 3.0.0 detected (unsupported). Removing...")                  
+                  steps = [
+                      ["sudo", "rm", "-f", "/usr/local/bin/apktool"],
+                      ["sudo", "rm", "-f", "/usr/local/bin/apktool.jar"]		
+                  ]
+                  for s in steps:
+                     rc = run_cmd(s)
+                     if rc != 0:
+                         warn(f"Failed to run: {' '.join(s)}")
         if ok:
             info(f"{t} found")
         else:
