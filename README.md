@@ -142,7 +142,7 @@ A keystore is a protected file that holds the signing key. You must enter a pass
 
 Keytool shows what you entered and asks you to confirm. Answer `yes` if it looks correct.
 
-**Enter Passphrase for keystore:**
+**Keystore password for signer #1:**
 
 Used again when signing the APK to confirm your keystore password (the same password you entered in the Enter keystore password / Re-enter new password field).
 
